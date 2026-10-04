@@ -85,6 +85,7 @@ export function PersonCard({ p }: { p: Person }) {
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-display font-bold text-foreground">{p.role}</span>
           {p.verified && <VerifiedPill />}
+          {p.isDemo && <DemoBadge />}
           {p.community && (
             <span className="rounded-full bg-community-tint px-2 py-0.5 text-[11px] font-semibold text-primary">Community</span>
           )}
@@ -104,4 +105,8 @@ export function PersonCard({ p }: { p: Person }) {
       <MatchRing value={p.score} />
     </LiftCard>
   );
+}
+
+export function DemoBadge() {
+  return <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">Demo</span>;
 }
