@@ -10,3 +10,12 @@
 - [ ] 7 Follow-up agent (scheduled, templates, settings)
 - [ ] 8 Money + admin + privacy pages
 - [ ] 9 Polish, i18n (Hindi/Urdu RTL/Hinglish), PWA, demo mode, demo script
+
+## Haidery brief (Oct 2026)
+- [x] 0 Fix build errors
+- [x] 1 Name + logo (header, favicon, app icon) — login/footer/email/chat avatar pending those features
+- [x] 2 Colour tokens
+- [ ] 3/3B Category browser, trusted-by strip, AI scoping; Priority Ring + Skill Crystal 3D
+- [ ] 4 Lovable Cloud: login, tables, seed data
+- [ ] 5-8 Profiles, categories, community-first flow, packages
+- [ ] 9+ Haidery AI chat and remaining sections

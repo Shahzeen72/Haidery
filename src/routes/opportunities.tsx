@@ -42,7 +42,7 @@ function Opps() {
             <FadeUp key={o.id} delay={i * 0.04}>
               <LiftCard className="h-full p-5">
                 {o.state === "community" ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-community"><Clock className="h-3.5 w-3.5" />Community Priority {o.daysLeft}d left</span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-primary"><Clock className="h-3.5 w-3.5" />Community Priority {o.daysLeft}d left</span>
                 ) : (
                   <span className="inline-flex items-center gap-1 rounded-full bg-market-tint px-2.5 py-1 text-xs font-bold text-market"><Globe className="h-3.5 w-3.5" />Open market · no community fit</span>
                 )}
