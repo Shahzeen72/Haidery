@@ -10,8 +10,8 @@ const NAV = [
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-glass backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" aria-label="Haidery home"><Logo /></Link>
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
+        <Link to="/" aria-label="Haidery home" className="py-2"><Logo className="h-10 w-auto sm:h-11" /></Link>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((n) => (
             <Link
