@@ -9,9 +9,9 @@ import { formatINR } from "@/lib/network-data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Trusted Network — Private, verified opportunity network" },
+      { title: "Haidery — Private, verified opportunity network" },
       { name: "description", content: "Work goes to verified community talent first. AI matching, blind-first profiles and a fair 7-day community window." },
-      { property: "og:title", content: "Trusted Network — Your community, first" },
+      { property: "og:title", content: "Haidery — Your community, first" },
       { property: "og:description", content: "A private, AI-powered opportunity network where community talent gets the first chance." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -102,7 +102,7 @@ function Home() {
         <FadeUp className="md:col-span-2 md:row-span-2">
           <LiftCard className="h-full border-ai/40 p-6">
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-ai-tint px-2.5 py-1 text-xs font-bold text-ai"><Sparkles className="h-3.5 w-3.5" /> AI Match</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-ai-tint px-2.5 py-1 text-xs font-bold text-ai-text"><Sparkles className="h-3.5 w-3.5" /> AI Match</span>
               <span className="text-xs text-hint">Brief: launch reels, Mumbai</span>
             </div>
             <div className="mt-5 flex items-center gap-5">
@@ -135,7 +135,7 @@ function Home() {
             <LiftCard className="h-full p-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl">Opportunities</h3>
-                <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-community">
+                <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-primary">
                   <Clock className="h-3.5 w-3.5" /> Community Priority {priority.daysLeft}d left
                 </span>
               </div>

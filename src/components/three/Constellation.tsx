@@ -68,14 +68,17 @@ function Graph({ query, onMatches }: { query: string; onMatches: (n: number) => 
       group.current.rotation.x += (tx - group.current.rotation.x) * (1 - Math.exp(-3 * dt));
       group.current.position.y = Math.sin(t * 0.6) * 0.12;
     }
+    const sc = scales.current;
     nodes.forEach((n, i) => {
       const target = matched[i] ? 1.6 + Math.sin(t * 5 + i) * 0.15 : hover === i ? 1.4 : 1;
-      scales.current[i] += (target - scales.current[i]) * (1 - Math.exp(-8 * dt));
+      const cur = sc[i] ?? 1;
+      const next = cur + (target - cur) * (1 - Math.exp(-8 * dt));
+      sc[i] = next;
       dummy.position.set(...n.position);
-      dummy.scale.setScalar(scales.current[i]);
+      dummy.scale.setScalar(next);
       dummy.updateMatrix();
       mesh.current?.setMatrixAt(i, dummy.matrix);
-      dummy.scale.setScalar(scales.current[i] * 2.2);
+      dummy.scale.setScalar(next * 2.2);
       dummy.updateMatrix();
       halo.current?.setMatrixAt(i, dummy.matrix);
     });

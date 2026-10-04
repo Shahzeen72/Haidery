@@ -34,6 +34,9 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-ai: var(--ai);
   --color-ai-tint: var(--ai-tint);
+  --color-ai-text: var(--ai-text);
+  --color-lavender: var(--lavender);
+  --color-link: var(--link);
   --color-community: var(--community);
   --color-community-tint: var(--community-tint);
   --color-market: var(--market);
@@ -58,47 +61,50 @@
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.977 0.004 85);          /* #F8F7F4 */
+  --background: #F9F8FD;
   --foreground: oklch(0.255 0.025 255);         /* #1B2430 */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.255 0.025 255);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.255 0.025 255);
-  --primary: oklch(0.511 0.086 186.4);          /* #0F766E */
-  --primary-hover: oklch(0.457 0.074 185);      /* #115E59 */
-  --primary-tint: oklch(0.956 0.018 175);       /* #E6F4F1 */
+  --primary: #1E3566;
+  --primary-hover: #162A55;
+  --primary-tint: #E8EDF8;
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.955 0.006 85);
   --secondary-foreground: oklch(0.255 0.025 255);
   --muted: oklch(0.955 0.006 85);
   --muted-foreground: oklch(0.44 0.03 257);     /* #475467 */
   --hint: oklch(0.66 0.03 258);                 /* #8A94A6 */
-  --accent: oklch(0.956 0.018 175);
-  --accent-foreground: oklch(0.457 0.074 185);
-  --ai: oklch(0.57 0.21 280);                   /* #6D5EF5 */
-  --ai-tint: oklch(0.95 0.03 285);
-  --community: oklch(0.69 0.16 35);             /* #F2735A */
-  --community-tint: oklch(0.95 0.025 35);       /* #FDECE8 */
-  --market: oklch(0.65 0.16 258);               /* #4C8DF6 */
+  --accent: #E8EDF8;
+  --accent-foreground: #1E3566;
+  --ai: #8B7BEF;
+  --ai-text: #6A58E0;
+  --lavender: #CFC5F7;
+  --ai-tint: #EFEBFD;
+  --community: #F4A06B;
+  --community-tint: #FEF0E6;
+  --market: #4F86DC;
+  --link: #2F5FB8;
   --market-tint: oklch(0.95 0.025 258);
   --success: oklch(0.6 0.13 160);               /* #1F9D6B */
   --warning: oklch(0.76 0.14 72);               /* #E9A23B */
   --destructive: oklch(0.58 0.18 25);           /* #D64545 */
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.92 0.01 85);                /* #E8E5DE */
-  --input: oklch(0.92 0.01 85);
-  --ring: oklch(0.511 0.086 186.4);
-  --glass: oklch(1 0 0 / 0.72);
+  --border: #E6E4F0;
+  --input: #E6E4F0;
+  --ring: #1E3566;
+  --glass: rgba(255,255,255,.75);
   --sidebar: oklch(1 0 0 / 0.72);
   --sidebar-foreground: oklch(0.255 0.025 255);
-  --sidebar-primary: oklch(0.511 0.086 186.4);
+  --sidebar-primary: #1E3566;
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.956 0.018 175);
-  --sidebar-accent-foreground: oklch(0.457 0.074 185);
-  --sidebar-border: oklch(0.92 0.01 85);
-  --sidebar-ring: oklch(0.511 0.086 186.4);
+  --sidebar-accent: #E8EDF8;
+  --sidebar-accent-foreground: #1E3566;
+  --sidebar-border: #E6E4F0;
+  --sidebar-ring: #1E3566;
 
-  --gradient-signature: linear-gradient(135deg, var(--ai), var(--primary));
+  --gradient-signature: linear-gradient(135deg, #CFC5F7, #4F86DC);
   --shadow-card: 0 1px 2px oklch(0.2 0.03 260 / 0.04), 0 12px 32px oklch(0.2 0.03 260 / 0.07);
   --shadow-lift: 0 2px 4px oklch(0.2 0.03 260 / 0.05), 0 20px 44px oklch(0.2 0.03 260 / 0.11);
 }
@@ -114,7 +120,7 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    color: var(--color-foreground);
+    color: var(--color-primary);
     letter-spacing: -0.02em;
     font-weight: 800;
   }
@@ -123,7 +129,6 @@
 @utility glass {
   background: var(--glass);
   backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
@@ -132,7 +137,7 @@
 @utility shadow-lift { box-shadow: var(--shadow-lift); }
 @utility bg-signature { background-image: var(--gradient-signature); }
 @utility text-signature {
-  background-image: var(--gradient-signature);
+  background-image: linear-gradient(135deg, #7B6AE8, #2F5FB8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

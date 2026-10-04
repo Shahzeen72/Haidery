@@ -60,7 +60,7 @@ export function MatchRing({ value, size = 48 }: { value: number; size?: number }
           transition={{ duration: 1.1, ease: "easeOut" }}
         />
       </svg>
-      <span className="absolute inset-0 grid place-items-center text-xs font-bold text-ai tabular">{Math.round(value)}%</span>
+      <span className="absolute inset-0 grid place-items-center text-xs font-bold text-ai-text tabular">{Math.round(value)}%</span>
     </div>
   );
 }
@@ -86,10 +86,10 @@ export function PersonCard({ p }: { p: Person }) {
           <span className="font-display font-bold text-foreground">{p.role}</span>
           {p.verified && <VerifiedPill />}
           {p.community && (
-            <span className="rounded-full bg-community-tint px-2 py-0.5 text-[11px] font-semibold text-community">Community</span>
+            <span className="rounded-full bg-community-tint px-2 py-0.5 text-[11px] font-semibold text-primary">Community</span>
           )}
           {p.rising && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-ai-tint px-2 py-0.5 text-[11px] font-semibold text-ai">
+            <span className="inline-flex items-center gap-1 rounded-full bg-ai-tint px-2 py-0.5 text-[11px] font-semibold text-ai-text">
               <TrendingUp className="h-3 w-3" /> Rising
             </span>
           )}

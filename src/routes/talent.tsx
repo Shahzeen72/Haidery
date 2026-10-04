@@ -9,9 +9,9 @@ export const Route = createFileRoute("/talent")({
   validateSearch: z.object({ q: z.string().optional().default("") }),
   head: () => ({
     meta: [
-      { title: "Find talent — Trusted Network" },
+      { title: "Find talent — Haidery" },
       { name: "description", content: "Blind-first, AI-ranked results from verified community members." },
-      { property: "og:title", content: "Find talent — Trusted Network" },
+      { property: "og:title", content: "Find talent — Haidery" },
       { property: "og:description", content: "Search verified community talent. Fit, not membership, earns a recommendation." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
