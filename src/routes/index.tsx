@@ -9,9 +9,9 @@ import { formatINR } from "@/lib/network-data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Trusted Network — Private, verified opportunity network" },
+      { title: "Haidery — Private, verified opportunity network" },
       { name: "description", content: "Work goes to verified community talent first. AI matching, blind-first profiles and a fair 7-day community window." },
-      { property: "og:title", content: "Trusted Network — Your community, first" },
+      { property: "og:title", content: "Haidery — Your community, first" },
       { property: "og:description", content: "A private, AI-powered opportunity network where community talent gets the first chance." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

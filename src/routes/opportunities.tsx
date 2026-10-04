@@ -7,9 +7,9 @@ import { formatINR } from "@/lib/network-data";
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
     meta: [
-      { title: "Opportunities — Trusted Network" },
+      { title: "Opportunities — Haidery" },
       { name: "description", content: "Projects in their 7-day community priority window, and those opened to outside talent." },
-      { property: "og:title", content: "Opportunities — Trusted Network" },
+      { property: "og:title", content: "Opportunities — Haidery" },
       { property: "og:description", content: "Community members see every project first, for 7 days." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
