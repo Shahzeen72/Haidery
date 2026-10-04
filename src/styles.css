@@ -137,7 +137,7 @@
 @utility shadow-lift { box-shadow: var(--shadow-lift); }
 @utility bg-signature { background-image: var(--gradient-signature); }
 @utility text-signature {
-  background-image: var(--gradient-signature);
+  background-image: linear-gradient(135deg, #7B6AE8, #2F5FB8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
