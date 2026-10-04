@@ -14,16 +14,180 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          city: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          brief: string
+          budget: number
+          category: string
+          community_window_ends_at: string
+          created_at: string
+          id: string
+          owner_id: string
+          status: string
+          title: string
+        }
+        Insert: {
+          brief?: string
+          budget: number
+          category: string
+          community_window_ends_at?: string
+          created_at?: string
+          id?: string
+          owner_id?: string
+          status?: string
+          title: string
+        }
+        Update: {
+          brief?: string
+          budget?: number
+          category?: string
+          community_window_ends_at?: string
+          created_at?: string
+          id?: string
+          owner_id?: string
+          status?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      shortlist: {
+        Row: {
+          consent_requested: boolean
+          created_at: string
+          id: string
+          owner_id: string
+          project_id: string
+          talent_id: string
+        }
+        Insert: {
+          consent_requested?: boolean
+          created_at?: string
+          id?: string
+          owner_id?: string
+          project_id: string
+          talent_id: string
+        }
+        Update: {
+          consent_requested?: boolean
+          created_at?: string
+          id?: string
+          owner_id?: string
+          project_id?: string
+          talent_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shortlist_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shortlist_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: false
+            referencedRelation: "talent"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      talent: {
+        Row: {
+          category: string
+          city: string
+          community: boolean
+          day_rate: number
+          id: string
+          initials: string
+          reason: string
+          role: string
+          score: number
+          skills: string[]
+          verified: boolean
+        }
+        Insert: {
+          category: string
+          city: string
+          community?: boolean
+          day_rate?: number
+          id: string
+          initials: string
+          reason?: string
+          role: string
+          score?: number
+          skills?: string[]
+          verified?: boolean
+        }
+        Update: {
+          category?: string
+          city?: string
+          community?: boolean
+          day_rate?: number
+          id?: string
+          initials?: string
+          reason?: string
+          role?: string
+          score?: number
+          skills?: string[]
+          verified?: boolean
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "client" | "talent"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +314,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "client", "talent"],
+    },
   },
 } as const
