@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          id: number
+          show_demo: boolean
+        }
+        Insert: {
+          id?: number
+          show_demo?: boolean
+        }
+        Update: {
+          id?: number
+          show_demo?: boolean
+        }
+        Relationships: []
+      }
+      opportunities: {
+        Row: {
+          budget: number
+          city: string
+          created_at: string
+          declined: number
+          id: string
+          interested: number
+          is_demo: boolean
+          offered: number
+          skills: string[]
+          state: string
+          title: string
+          window_ends_at: string
+        }
+        Insert: {
+          budget: number
+          city: string
+          created_at?: string
+          declined?: number
+          id?: string
+          interested?: number
+          is_demo?: boolean
+          offered?: number
+          skills?: string[]
+          state?: string
+          title: string
+          window_ends_at?: string
+        }
+        Update: {
+          budget?: number
+          city?: string
+          created_at?: string
+          declined?: number
+          id?: string
+          interested?: number
+          is_demo?: boolean
+          offered?: number
+          skills?: string[]
+          state?: string
+          title?: string
+          window_ends_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           city: string | null
@@ -43,6 +103,7 @@ export type Database = {
           community_window_ends_at: string
           created_at: string
           id: string
+          is_demo: boolean
           owner_id: string
           status: string
           title: string
@@ -54,6 +115,7 @@ export type Database = {
           community_window_ends_at?: string
           created_at?: string
           id?: string
+          is_demo?: boolean
           owner_id?: string
           status?: string
           title: string
@@ -65,6 +127,7 @@ export type Database = {
           community_window_ends_at?: string
           created_at?: string
           id?: string
+          is_demo?: boolean
           owner_id?: string
           status?: string
           title?: string
@@ -115,43 +178,111 @@ export type Database = {
       }
       talent: {
         Row: {
+          approved: boolean
           category: string
           city: string
           community: boolean
           day_rate: number
           id: string
           initials: string
+          is_demo: boolean
           reason: string
           role: string
           score: number
           skills: string[]
+          user_id: string | null
           verified: boolean
         }
         Insert: {
+          approved?: boolean
           category: string
           city: string
           community?: boolean
           day_rate?: number
-          id: string
+          id?: string
           initials: string
+          is_demo?: boolean
           reason?: string
           role: string
           score?: number
           skills?: string[]
+          user_id?: string | null
           verified?: boolean
         }
         Update: {
+          approved?: boolean
           category?: string
           city?: string
           community?: boolean
           day_rate?: number
           id?: string
           initials?: string
+          is_demo?: boolean
           reason?: string
           role?: string
           score?: number
           skills?: string[]
+          user_id?: string | null
           verified?: boolean
+        }
+        Relationships: []
+      }
+      talent_contacts: {
+        Row: {
+          email: string
+          full_name: string
+          phone: string
+          talent_id: string
+        }
+        Insert: {
+          email: string
+          full_name: string
+          phone: string
+          talent_id: string
+        }
+        Update: {
+          email?: string
+          full_name?: string
+          phone?: string
+          talent_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "talent_contacts_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: true
+            referencedRelation: "talent"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trusted_orgs: {
+        Row: {
+          approved: boolean
+          city: string
+          created_at: string
+          id: string
+          is_demo: boolean
+          kind: string
+          name: string
+        }
+        Insert: {
+          approved?: boolean
+          city: string
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          kind: string
+          name: string
+        }
+        Update: {
+          approved?: boolean
+          city?: string
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          kind?: string
+          name?: string
         }
         Relationships: []
       }
@@ -178,6 +309,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      delete_demo_data: { Args: never; Returns: undefined }
+      demo_visible: { Args: never; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -185,6 +318,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      public_stats: { Args: never; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "client" | "talent"
