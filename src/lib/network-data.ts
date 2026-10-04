@@ -38,8 +38,8 @@ export function buildNodes(count = 90, radius = 3): NetworkNode[] {
     nodes.push({
       position: [Math.cos(theta) * r * shell, y * shell, Math.sin(theta) * r * shell],
       community,
-      skills: SKILL_POOL[(i * 11) % SKILL_POOL.length],
-      city: CITIES[(i * 3) % CITIES.length],
+      skills: SKILL_POOL[(i * 11) % SKILL_POOL.length]!,
+      city: CITIES[(i * 3) % CITIES.length]!,
     });
   }
   return nodes;
@@ -51,7 +51,7 @@ export function matchesQuery(node: NetworkNode, query: string) {
   const words = q.split(/\W+/).filter((w) => w.length > 3);
   return node.skills.some((s) => {
     const sl = s.toLowerCase();
-    return words.some((w) => sl.includes(w) || w.includes(sl.split(" ")[0]));
+    return words.some((w) => sl.includes(w) || w.includes(sl.split(" ")[0]!));
   });
 }
 

@@ -23,8 +23,8 @@ export function LiftCard({ children, className = "" }: { children: ReactNode; cl
   return (
     <motion.div
       className={`glass ${className}`}
-      whileHover={reduce ? undefined : { y: -4, rotateX: 1.5, rotateY: -1.5, boxShadow: "var(--shadow-lift)" }}
-      whileTap={reduce ? undefined : { scale: 0.98 }}
+      whileHover={reduce ? {} : { y: -4, rotateX: 1.5, rotateY: -1.5, boxShadow: "var(--shadow-lift)" }}
+      whileTap={reduce ? {} : { scale: 0.98 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       style={{ transformPerspective: 900 }}
     >
@@ -33,7 +33,7 @@ export function LiftCard({ children, className = "" }: { children: ReactNode; cl
   );
 }
 
-export function CountUp({ to, format = (n) => Math.round(n).toLocaleString("en-IN") }: { to: number; format?: (n: number) => string }) {
+export function CountUp({ to, format = (n: number) => Math.round(n).toLocaleString("en-IN") }: { to: number; format?: ((n: number) => string) | undefined }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
   const [val, setVal] = useState(0);

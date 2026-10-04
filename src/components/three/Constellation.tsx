@@ -36,7 +36,7 @@ function Graph({ query, onMatches }: { query: string; onMatches: (n: number) => 
         .sort((x, y) => x.d - y.d)
         .slice(0, 3);
       d.forEach(({ j }) => {
-        if (j > i) pts.push(...a.position, ...nodes[j].position);
+        if (j > i) pts.push(...a.position, ...nodes[j]!.position);
       });
     });
     const g = new THREE.BufferGeometry();
@@ -84,7 +84,7 @@ function Graph({ query, onMatches }: { query: string; onMatches: (n: number) => 
 
     // beams from centre
     beamProgress.current = Math.min(1, beamProgress.current + dt * 1.2);
-    const pos = beamGeom.attributes.position as THREE.BufferAttribute;
+    const pos = beamGeom.attributes["position"] as THREE.BufferAttribute;
     let k = 0;
     nodes.forEach((n, i) => {
       if (!matched[i]) return;
@@ -100,7 +100,7 @@ function Graph({ query, onMatches }: { query: string; onMatches: (n: number) => 
     }
   });
 
-  const hovered: NetworkNode | null = hover !== null ? nodes[hover] : null;
+  const hovered: NetworkNode | null = hover !== null ? (nodes[hover] ?? null) : null;
 
   return (
     <group ref={group}>
@@ -149,7 +149,7 @@ export default function Constellation({ query, onMatches }: { query: string; onM
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     if (!wrap.current) return;
-    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting));
+    const io = new IntersectionObserver(([e]) => setVisible(!!e?.isIntersecting));
     io.observe(wrap.current);
     return () => io.disconnect();
   }, []);
