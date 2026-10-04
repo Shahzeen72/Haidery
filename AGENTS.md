@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+- Auth-only pages live under src/routes/_authenticated/ (client-side gate) so the server never renders private data.
+- The Haidery chat streams through the src/routes/api/chat.ts server route so the AI key and model stay server-side and swappable.
+- Talent rows are blind (no names/photos/age/gender) and publicly readable; identity data must live in a separate, consent-gated table.

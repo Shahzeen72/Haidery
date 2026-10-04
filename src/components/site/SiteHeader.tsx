@@ -25,6 +25,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
+        <Link to="/dashboard" className="rounded-[12px] bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-hover">My projects</Link>
       </div>
     </header>
   );

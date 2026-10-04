@@ -163,6 +163,18 @@ function Home() {
         ))}
       </section>
 
+      {/* CATEGORIES */}
+      <FadeUp>
+        <section className="mt-12">
+          <h2 className="font-display text-2xl font-bold text-primary">Browse by skill</h2>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {["Design", "Development", "Video", "Marketing", "Writing", "Data & AI", "Education", "Translation"].map((c) => (
+              <Link key={c} to="/talent" search={{ q: c }} className="glass px-4 py-5 text-center font-semibold text-foreground transition-transform hover:-translate-y-1">{c}</Link>
+            ))}
+          </div>
+        </section>
+      </FadeUp>
+
       {/* STATS */}
       <FadeUp>
         <section className="glass mt-6 grid gap-6 p-6 sm:grid-cols-3">

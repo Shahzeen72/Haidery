@@ -19,3 +19,9 @@
 - [ ] 4 Lovable Cloud: login, tables, seed data
 - [ ] 5-8 Profiles, categories, community-first flow, packages
 - [ ] 9+ Haidery AI chat and remaining sections
+
+## Done (this round)
+- Login (email + Google), My projects page, 7-day community window with live countdown, decision card, shortlist, 14% fee, 18 Indian demo members, Haidery chat, skill browser on home.
+
+## Open
+- Priority Ring + Skill Crystal 3D scenes; trusted-by strip; contracts/milestones/ratings; audit log; follow-up agent (email/WhatsApp); admin; Hindi/Urdu; PWA; demo mode.
