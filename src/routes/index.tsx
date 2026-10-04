@@ -3,7 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 import { ArrowRight, Clock, EyeOff, Lock, PenLine, Search, ShieldCheck, Sparkles, Users, Wallet, Briefcase } from "lucide-react";
 import { ConstellationScene } from "@/components/three/ConstellationScene";
 import { CountUp, FadeUp, LiftCard, MatchRing, PersonCard } from "@/components/site/ui-bits";
-import { PEOPLE, OPPORTUNITIES } from "@/lib/demo-people";
+import { useQuery } from "@tanstack/react-query";
+import { daysLeft, opportunitiesQuery, statsQuery, talentQuery } from "@/lib/talent-data";
+import { TrustedStrip } from "@/components/site/TrustedStrip";
 import { formatINR } from "@/lib/network-data";
 
 export const Route = createFileRoute("/")({
@@ -39,8 +41,11 @@ function Home() {
     navigate({ to: "/talent", search: { q: query || EXAMPLES[ph] } });
   };
 
-  const top3 = [...PEOPLE].sort((a, b) => b.score - a.score).slice(0, 3);
-  const priority = OPPORTUNITIES[0]!;
+  const people = useQuery(talentQuery).data ?? [];
+  const opps = useQuery(opportunitiesQuery).data ?? [];
+  const stats = useQuery(statsQuery).data;
+  const top3 = [...people].sort((a, b) => Number(!!a.isDemo) - Number(!!b.isDemo) || b.score - a.score).slice(0, 3);
+  const priority = opps.find((o) => o.state === "community");
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-6">
@@ -113,7 +118,7 @@ function Home() {
               </div>
             </div>
             <div className="mt-5 space-y-3">
-              {top3.map((p) => <PersonCard key={p.id} p={p} />)}
+              {top3.map((p) => <Link key={p.id} to="/member/$id" params={{ id: p.id }} className="block"><PersonCard p={p} /></Link>)}
             </div>
           </LiftCard>
         </FadeUp>
@@ -123,7 +128,7 @@ function Home() {
             <LiftCard className="flex h-full items-center justify-between gap-4 p-6">
               <div>
                 <h3 className="text-xl">Find talent</h3>
-                <p className="mt-1 text-sm">{PEOPLE.length} verified profiles across design, data, video and more.</p>
+                <p className="mt-1 text-sm">{people.length} profiles across design, data, video and more.</p>
               </div>
               <ArrowRight className="h-5 w-5 text-primary" />
             </LiftCard>
@@ -135,12 +140,14 @@ function Home() {
             <LiftCard className="h-full p-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl">Opportunities</h3>
-                <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-primary">
-                  <Clock className="h-3.5 w-3.5" /> Community Priority {priority.daysLeft}d left
-                </span>
+                {priority && <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-primary">
+                  <Clock className="h-3.5 w-3.5" /> Community Priority {daysLeft(priority.window_ends_at)}d left
+                </span>}
               </div>
-              <p className="mt-2 text-sm font-medium text-foreground">{priority.title}</p>
-              <p className="text-xs text-hint tabular">{formatINR(priority.budget)} · Offered to {priority.offered} • {priority.interested} interested • {priority.declined} declined</p>
+              {priority ? <>
+                <p className="mt-2 text-sm font-medium text-foreground">{priority.title}{priority.is_demo && " · Demo"}</p>
+                <p className="text-xs text-hint tabular">{formatINR(priority.budget)} · Offered to {priority.offered} • {priority.interested} interested • {priority.declined} declined</p>
+              </> : <p className="mt-2 text-sm">No live projects yet.</p>}
             </LiftCard>
           </Link>
         </FadeUp>
@@ -148,7 +155,7 @@ function Home() {
         {[
           { i: PenLine, t: "Post a project", d: "Brief coach included", to: "/opportunities" as const },
           { i: Search, t: "Search skills", d: "Blind-first results", to: "/talent" as const },
-          { i: Briefcase, t: "Open roles", d: `${OPPORTUNITIES.length} live now`, to: "/opportunities" as const },
+          { i: Briefcase, t: "Open roles", d: `${opps.length} live now`, to: "/opportunities" as const },
           { i: Wallet, t: "14% fair fee", d: "7% fund · 7% organizers", to: "/opportunities" as const },
         ].map(({ i: I, t, d, to }, k) => (
           <FadeUp key={t} delay={0.12 + k * 0.04}>
@@ -175,13 +182,15 @@ function Home() {
         </section>
       </FadeUp>
 
-      {/* STATS */}
+      <FadeUp><TrustedStrip /></FadeUp>
+
+      {/* STATS — real members only, demo never counted */}
       <FadeUp>
         <section className="glass mt-6 grid gap-6 p-6 sm:grid-cols-3">
           {[
-            { v: 1240, l: "Verified members", f: undefined },
-            { v: 318, l: "Jobs kept in the community", f: undefined },
-            { v: 4875000, l: "Earned by members", f: (n: number) => formatINR(n) },
+            { v: stats?.members ?? 0, l: "Members", f: undefined },
+            { v: stats?.verified ?? 0, l: "Verified members", f: undefined },
+            { v: stats?.projects ?? 0, l: "Projects posted", f: undefined },
           ].map((s) => (
             <div key={s.l}>
               <div className="font-display text-3xl font-extrabold text-foreground sm:text-4xl"><CountUp to={s.v} format={s.f} /></div>
