@@ -40,7 +40,7 @@ function Home() {
   };
 
   const top3 = [...PEOPLE].sort((a, b) => b.score - a.score).slice(0, 3);
-  const priority = OPPORTUNITIES[0];
+  const priority = OPPORTUNITIES[0]!;
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-6">
