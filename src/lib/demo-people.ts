@@ -10,6 +10,9 @@ export type Person = {
   community: boolean;
   verified: boolean;
   rising?: boolean;
+  isDemo?: boolean;
+  category?: string;
+  dayRate?: number;
 };
 
 export const PEOPLE: Person[] = [

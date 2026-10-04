@@ -1,9 +1,10 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Search, Sparkles } from "lucide-react";
 import { z } from "zod";
 import { PersonCard, FadeUp } from "@/components/site/ui-bits";
-import { searchPeople } from "@/lib/demo-people";
+import { rankPeople, talentQuery } from "@/lib/talent-data";
 
 export const Route = createFileRoute("/talent")({
   validateSearch: z.object({ q: z.string().optional().default("") }),
@@ -24,7 +25,8 @@ function Talent() {
   const { q } = Route.useSearch();
   const navigate = useNavigate({ from: "/talent" });
   const [draft, setDraft] = useState(q);
-  const results = searchPeople(q);
+  const people = useQuery(talentQuery);
+  const results = rankPeople(people.data ?? [], q);
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-24 pt-10 sm:px-6">
@@ -38,10 +40,14 @@ function Talent() {
         <input value={draft} onChange={(e) => setDraft(e.target.value)} aria-label="Search skills" placeholder="Skill, role or city" className="h-11 flex-1 bg-transparent text-foreground outline-none placeholder:text-hint" />
         <button className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-primary px-4 font-semibold text-primary-foreground hover:bg-primary-hover active:scale-[.98]"><Search className="h-4 w-4" />Search</button>
       </form>
-      <p className="mt-6 text-sm text-hint">{results.length} {results.length === 1 ? "match" : "matches"}{q && <> for “{q}”</>}</p>
+      <p className="mt-6 text-sm text-hint">{people.isLoading ? "Searching…" : <>{results.length} {results.length === 1 ? "match" : "matches"}{q && <> for “{q}”</>}</>}</p>
       <div className="mt-3 space-y-3">
-        {results.map((p, i) => <FadeUp key={p.id} delay={i * 0.03}><PersonCard p={p} /></FadeUp>)}
-        {!results.length && (
+        {results.map((p, i) => (
+          <FadeUp key={p.id} delay={i * 0.03}>
+            <Link to="/member/$id" params={{ id: p.id }} className="block"><PersonCard p={p} /></Link>
+          </FadeUp>
+        ))}
+        {!people.isLoading && !results.length && (
           <div className="glass p-8 text-center">
             <h3 className="text-lg">No community match yet</h3>
             <p className="mt-1 text-sm">Try a broader skill. If nobody fits, a project can later open to outside talent — never silently.</p>

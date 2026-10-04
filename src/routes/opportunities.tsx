@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Clock, Globe } from "lucide-react";
-import { FadeUp, LiftCard } from "@/components/site/ui-bits";
-import { OPPORTUNITIES } from "@/lib/demo-people";
+import { FadeUp, LiftCard, DemoBadge } from "@/components/site/ui-bits";
 import { formatINR } from "@/lib/network-data";
+import { daysLeft, opportunitiesQuery } from "@/lib/talent-data";
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
@@ -19,33 +20,39 @@ export const Route = createFileRoute("/opportunities")({
 });
 
 function Opps() {
-  const live = OPPORTUNITIES.filter((o) => o.state === "community").length;
+  const { data = [], isLoading } = useQuery(opportunitiesQuery);
+  const real = data.filter((o) => !o.is_demo);
   return (
     <div className="mx-auto max-w-5xl px-4 pb-24 pt-10 sm:px-6">
       <h1 className="text-3xl sm:text-4xl">Opportunities</h1>
       <div className="mt-6 grid grid-cols-3 gap-3">
         {[
-          { v: OPPORTUNITIES.length, l: "Live projects" },
-          { v: live, l: "In community window" },
-          { v: formatINR(OPPORTUNITIES.reduce((s, o) => s + o.budget, 0)), l: "Total budget" },
+          { v: real.length, l: "Live projects" },
+          { v: real.filter((o) => o.state === "community").length, l: "In community window" },
+          { v: formatINR(real.reduce((s, o) => s + o.budget, 0)), l: "Total budget" },
         ].map((s) => (
           <div key={s.l} className="glass p-4">
             <div className="font-display text-2xl font-extrabold text-foreground tabular">{s.v}</div>
-            <div className="text-xs">{s.l}</div>
+            <div className="text-xs">{s.l} <span className="text-hint">(real only)</span></div>
           </div>
         ))}
       </div>
+      {isLoading && <p className="mt-6 text-sm">Loading…</p>}
+      {!isLoading && !data.length && <div className="glass mt-6 p-8 text-center">No opportunities yet.</div>}
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        {OPPORTUNITIES.map((o, i) => {
-          const pending = o.offered - o.interested - o.declined;
+        {data.map((o, i) => {
+          const pending = Math.max(0, o.offered - o.interested - o.declined);
           return (
             <FadeUp key={o.id} delay={i * 0.04}>
               <LiftCard className="h-full p-5">
-                {o.state === "community" ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-primary"><Clock className="h-3.5 w-3.5" />Community Priority {o.daysLeft}d left</span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-market-tint px-2.5 py-1 text-xs font-bold text-market"><Globe className="h-3.5 w-3.5" />Open market · no community fit</span>
-                )}
+                <div className="flex items-center justify-between gap-2">
+                  {o.state === "community" ? (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-community-tint px-2.5 py-1 text-xs font-bold text-primary"><Clock className="h-3.5 w-3.5" />Community Priority {daysLeft(o.window_ends_at)}d left</span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-market-tint px-2.5 py-1 text-xs font-bold text-market"><Globe className="h-3.5 w-3.5" />Open market · no community fit</span>
+                  )}
+                  {o.is_demo && <DemoBadge />}
+                </div>
                 <h3 className="mt-3 text-lg leading-snug">{o.title}</h3>
                 <p className="text-sm text-hint tabular">{formatINR(o.budget)} · {o.city}</p>
                 <div className="mt-3 flex flex-wrap gap-1.5">

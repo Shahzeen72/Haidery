@@ -14,8 +14,10 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as TalentRouteImport } from './routes/talent'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as MemberIdRouteImport } from './routes/member.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,6 +43,11 @@ const TalentRoute = TalentRouteImport.update({
   path: '/talent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -51,22 +58,31 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemberIdRoute = MemberIdRouteImport.update({
+  id: '/member/$id',
+  path: '/member/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/opportunities': typeof OpportunitiesRoute
   '/talent': typeof TalentRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/chat': typeof ApiChatRoute
+  '/member/$id': typeof MemberIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/opportunities': typeof OpportunitiesRoute
   '/talent': typeof TalentRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/chat': typeof ApiChatRoute
+  '/member/$id': typeof MemberIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -75,15 +91,32 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/opportunities': typeof OpportunitiesRoute
   '/talent': typeof TalentRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/chat': typeof ApiChatRoute
+  '/member/$id': typeof MemberIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/opportunities' | '/talent' | '/dashboard' | '/api/chat'
+    | '/'
+    | '/auth'
+    | '/opportunities'
+    | '/talent'
+    | '/admin'
+    | '/dashboard'
+    | '/api/chat'
+    | '/member/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/opportunities' | '/talent' | '/dashboard' | '/api/chat'
+  to:
+    | '/'
+    | '/auth'
+    | '/opportunities'
+    | '/talent'
+    | '/admin'
+    | '/dashboard'
+    | '/api/chat'
+    | '/member/$id'
   id:
     | '__root__'
     | '/'
@@ -91,8 +124,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/opportunities'
     | '/talent'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/api/chat'
+    | '/member/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -102,6 +137,7 @@ export interface RootRouteChildren {
   OpportunitiesRoute: typeof OpportunitiesRoute
   TalentRoute: typeof TalentRoute
   ApiChatRoute: typeof ApiChatRoute
+  MemberIdRoute: typeof MemberIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -141,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TalentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -155,14 +198,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/member/$id': {
+      id: '/member/$id'
+      path: '/member/$id'
+      fullPath: '/member/$id'
+      preLoaderRoute: typeof MemberIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
 }
 
@@ -176,6 +228,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpportunitiesRoute: OpportunitiesRoute,
   TalentRoute: TalentRoute,
   ApiChatRoute: ApiChatRoute,
+  MemberIdRoute: MemberIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

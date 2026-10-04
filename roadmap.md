@@ -24,4 +24,6 @@
 - Login (email + Google), My projects page, 7-day community window with live countdown, decision card, shortlist, 14% fee, 18 Indian demo members, Haidery chat, skill browser on home.
 
 ## Open
-- Priority Ring + Skill Crystal 3D scenes; trusted-by strip; contracts/milestones/ratings; audit log; follow-up agent (email/WhatsApp); admin; Hindi/Urdu; PWA; demo mode.
+- Priority Ring + Skill Crystal 3D scenes; contracts/milestones/ratings; audit log; follow-up agent (email/WhatsApp); Hindi/Urdu; PWA; 
+
+- Done: demo data with Demo badges + switch + delete, admin area (approve/verify/unpublish, trusted orgs), Trusted by strip, member profile pages.
