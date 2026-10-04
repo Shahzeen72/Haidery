@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { MeshBackground } from "@/components/brand/MeshBackground";
 import { SiteHeader, BottomNav } from "@/components/site/SiteHeader";
+import { HaideryChat } from "@/components/site/HaideryChat";
 
 function NotFoundComponent() {
   return (
@@ -125,6 +126,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <BottomNav />
+      <HaideryChat />
     </QueryClientProvider>
   );
 }
